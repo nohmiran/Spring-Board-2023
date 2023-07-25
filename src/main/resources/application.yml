@@ -1,0 +1,23 @@
+# 서버 포트 설정
+server:
+  port: 8081
+
+# DB 접속 정보
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sys
+    username: root
+    password: relaybrand1!
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update  # DB 초기화 전략
+    properties:
+      hibernate:
+        format_sql: true # 콘솔에 출력되는 JPA 실행 쿼리를 가독성있게 표현
+  # 타임리프 캐시 무효화
+  thymeleaf:
+    cache: false
+
