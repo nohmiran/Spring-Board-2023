@@ -33,7 +33,7 @@ public class BoardController {
         // DB에서 전체 게시글 데이터를 가져와서 보여줌.
         List<BoardDto> boardDtoList = boardService.findAll();
         model.addAttribute("boardList", boardDtoList);
-        return "/pages/list";
+        return "pages/list";
     }
 
 
@@ -44,14 +44,14 @@ public class BoardController {
         boardService.updateHits(id);
         BoardDto boardDto = boardService.findById(id);
         model.addAttribute("board", boardDto);
-        return "/pages/detail";
+        return "pages/detail";
     }
 
     @GetMapping("/update/{id}")
     public String updateForm(@PathVariable Long id, Model model) {
         BoardDto boardDto = boardService.findById(id);
         model.addAttribute("boardUpdate", boardDto);
-        return "/pages/update";
+        return "pages/update";
     }
 
     @PostMapping("/update")
