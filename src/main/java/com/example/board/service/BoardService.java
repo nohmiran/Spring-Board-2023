@@ -35,12 +35,8 @@ public class BoardService {
         return boardDtoList;
     }
 
-
+    @Transactional
     public void updateHits(Long id) {
-        // 조회수 처리
-        // update   board_table
-        //    set   hits = hits + 1
-        //    where id = ?
         boardRepository.updateHits(id);
     }
 
