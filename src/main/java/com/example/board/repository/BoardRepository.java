@@ -8,9 +8,12 @@ import org.springframework.data.repository.query.Param;
 
 public interface BoardRepository extends JpaRepository<BoardEntity, Long> {
 
+//    List<BoardEntity> findByIdAndInvalidFalse();
 
     // jpql(java persistence query language)
     @Modifying
     @Query(value = "update BoardEntity b set b.hits = b.hits + 1 where b.id = :id")
-    void boardHits(@Param("id") Long id);
+    void updateHits(@Param("id") Long id);
+
+
 }

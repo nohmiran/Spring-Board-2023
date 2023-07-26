@@ -1,7 +1,7 @@
 package com.example.board.controller;
 
 import com.example.board.dto.BoardDto;
-import com.example.board.service.Boardservice;
+import com.example.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,33 +15,54 @@ import java.util.List;
 @RequestMapping("/board")
 @RequiredArgsConstructor
 public class BoardController {
-    private final Boardservice boardservice;
+    private final BoardService boardService;
 
-    @GetMapping("/save-form")
+    @GetMapping("/save")
     public String saveBoard() {
         return "pages/save";
     }
 
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDto boardDto) {
-        Long id = boardservice.save(boardDto);
-        return "redirect:/board/" + id;
+        boardService.save(boardDto);
+        return "redirect:/board/";
     }
 
     @GetMapping("/")
     public String findAll(Model model) {
-        List<BoardDto> boardDtoList = boardservice.findAll();
+        // DB에서 전체 게시글 데이터를 가져와서 보여줌.
+        List<BoardDto> boardDtoList = boardService.findAll();
         model.addAttribute("boardList", boardDtoList);
-
-        log.info("boardDtoList", boardDtoList);
-        return "/pages/findAll";
+        return "/pages/list";
     }
 
+
     @GetMapping("/{id}")
-    public String findById(@PathVariable Long id, Model model){
-        BoardDto boardDto = boardservice.findById(id);
+    public String findById(@PathVariable Long id, Model model) {
+        // 해당 게시글 조회수 하나 올리고
+        // 게시글 데이터 가져와서 detail에 출력
+        boardService.updateHits(id);
+        BoardDto boardDto = boardService.findById(id);
         model.addAttribute("board", boardDto);
         return "/pages/detail";
     }
 
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        BoardDto boardDto = boardService.findById(id);
+        model.addAttribute("boardUpdate", boardDto);
+        return "/pages/update";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute BoardDto boardDto) {
+        boardService.update(boardDto);
+        return "redirect:/board/" + boardDto.getId();
+    }
+
+    @GetMapping("/delete")
+    public String delete(@PathVariable Long id){
+        boardService.delete(id);
+        return "redirect:/board/";
+    }
 }

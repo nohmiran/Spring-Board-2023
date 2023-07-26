@@ -11,17 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+// DTO -> Entity (Entity Class)
+// Entity -> DTO (DTO Class)
+
 @Service
 @RequiredArgsConstructor
-public class Boardservice {
+public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public Long save(BoardDto boardDto) {
-
-        Long savedId = boardRepository.save(BoardEntity.from(boardDto)).getId();
-
-        return savedId;
+    public void save(BoardDto boardDto) {
+        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDto);
+        boardRepository.save(boardEntity);
     }
 
     public List<BoardDto> findAll() {
@@ -29,24 +30,38 @@ public class Boardservice {
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         for (BoardEntity boardEntity : boardEntityList) {
-            boardDtoList.add(BoardDto.from(boardEntity));
+            boardDtoList.add(BoardDto.toBoardDto(boardEntity));
         }
         return boardDtoList;
     }
 
+
+    public void updateHits(Long id) {
+        // 조회수 처리
+        // update   board_table
+        //    set   hits = hits + 1
+        //    where id = ?
+        boardRepository.updateHits(id);
+    }
+
     @Transactional
     public BoardDto findById(Long id) {
-
-        // 조회수 처리
-        // native sql : update   board_table
-        //                 set   hits = hits + 1
-        //                 where id = ?
-        boardRepository.boardHits(id);
         Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
         if (optionalBoardEntity.isPresent()) {
-            return BoardDto.from(optionalBoardEntity.get());
+            BoardEntity boardEntity = optionalBoardEntity.get();
+            BoardDto boardDto = BoardDto.toBoardDto(boardEntity);
+            return boardDto;
         } else {
             return null;
         }
     }
+
+    public void update(BoardDto boardDto) {
+        boardRepository.save(BoardEntity.toUpdateEntity(boardDto));
+    }
+
+    public void delete(Long id) {
+        boardRepository.deleteById(id);
+    }
+
 }

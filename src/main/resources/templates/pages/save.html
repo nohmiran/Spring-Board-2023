@@ -7,11 +7,17 @@
 <body>
     <h2>글작성 form~</h2>
     <form action="/board/save" method="post">
-        제목 : <input type="text" name="boardTitle"><br>
-        작성자 : <input type="text" name="boardWriter"><br>
-        비밀번호 : <input type="text" name="boardPassword"><br>
-        내용 : <input type="text" name="boardContents"><br>
-        <input type="submit" value="저장"><br>
+        제목 : <input type="text" name="title"><br>
+        작성자 : <input type="text" name="writer"><br>
+        비밀번호 : <input type="password" name="password"><br>
+        내용 : <input type="text" name="contents"><br>
+        <button type="submit" onclick="req()">저장</button><br>
     </form>
 </body>
+<script th:inline="javascript">
+    const req = () => {
+        // 글 목록
+        location.href="/board/";
+    }
+</script>
 </html>

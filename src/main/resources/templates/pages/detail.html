@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h2>상세보기 form~</h2>
+    <table>
+        <tr>
+            <th>No.</th>
+            <th>작성자</th>
+            <th>제목</th>
+            <th>비밀번호</th>
+            <th>작성일자</th>
+            <th>내용</th>
+            <th>조회수</th>
+        </tr>
+        <tr>
+            <td th:text="${board.id}"></td>
+            <td th:text="${board.writer}"></td>
+            <td th:text="${board.title}"></td>
+            <td th:text="${board.password}"></td>
+            <td th:text="${board.createdDate}"></td>
+            <td th:text="${board.contents}"></td>
+            <td th:text="${board.hits}"></td>
+        </tr>
+    </table>
+    <button onclick="req(1)" class="reqBtn">수정</button>
+    <button onclick="req(2)" class="reqBtn">삭제</button>
+    <button onclick="req(3)" class="reqBtn">목록</button>
+
+    <div id="pw">
+        비밀번호 입력 : <input type="text" id="password">
+        <button onclick="pwCheck()">확인</button>
+    </div>
+</body>
+<script th:inline="javascript">
+    const req = (num) => {
+        let inputTag = "비밀번호 입력 : <input type=\"text\" id=\"password\">\n" +
+            "    <button onclick=\"pwCheck(" + num + ")\">확인</button>";
+        document.getElementById("pw").innerHTML = inputTag;
+    }
+
+    const pwCheck = (num) => {
+        console.log("pwCheck함수", num);
+
+        const pwConfirm = document.getElementById("password").value;
+        console.log(pwConfirm);
+
+        const pw = [[${board.password}]];
+        const id = [[${board.id}]];
+        if (pw == pwConfirm) {
+            if (num == 1) {
+                 // 수정 요청
+                 location.href="/board/update/" + id;
+            }
+            if(num== 2){
+                 // 삭제 요청
+                 location.href="/board/delete/" + id;
+            }
+            if(num== 3){
+                // 글 목록
+                location.href="/board/";
+            }
+        } else {
+            alert("false");
+        }
+    }
+</script>
+</html>

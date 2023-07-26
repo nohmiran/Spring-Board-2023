@@ -1,7 +1,7 @@
 package com.example.board;
 
 import com.example.board.dto.BoardDto;
-import com.example.board.service.Boardservice;
+import com.example.board.service.BoardService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +14,7 @@ import java.util.stream.IntStream;
 public class BoardTest {
 
     @Autowired
-    private Boardservice boardservice;
+    private BoardService boardservice;
 
     public BoardDto newBoard(int i) {
         BoardDto boardDto = new BoardDto("title" + i, "writer" + i, "password" + i, "contents" + i);

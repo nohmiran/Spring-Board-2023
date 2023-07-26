@@ -1,15 +1,17 @@
 package com.example.board.dto;
 
 import com.example.board.entity.BoardEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+// DTO(Data Transfer Object), VO, Bean,    Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor // 기본 생성자
+@AllArgsConstructor // 모든 필드를 매개변수로 하는 생성자
 public class BoardDto {
 
     private Long id;
@@ -35,7 +37,7 @@ public class BoardDto {
         this.contents = contents;
     }
 
-    public static BoardDto from(BoardEntity boardEntity) {
+    public static BoardDto toBoardDto(BoardEntity boardEntity) {
 
         BoardDto boardDto = new BoardDto();
         boardDto.setId(boardEntity.getId());
@@ -49,4 +51,5 @@ public class BoardDto {
 
         return boardDto;
     }
+
 }
