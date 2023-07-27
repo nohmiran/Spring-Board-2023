@@ -16,7 +16,7 @@ public class BoardQueryDslRepository {
 
     public void updateHits(Long id){
         queryFactory.update(qBoard)
-                .set(qBoard.hits, qBoard.hits.add(1))
+                .set(qBoard.hits, qBoard.hits.add(1)) // 클릭한 게시글 조회수 + 1
                 .where(qBoard.id.eq(id))
                 .execute();
     }

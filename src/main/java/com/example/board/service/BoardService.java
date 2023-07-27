@@ -28,8 +28,8 @@ public class BoardService {
         boardRepository.save(boardEntity);
     }
 
-    public List<BoardDto> findAll() {
-        List<BoardEntity> boardEntityList = boardRepository.findAll();
+    public List<BoardDto> findByInvalidFalse() {
+        List<BoardEntity> boardEntityList = boardRepository.findByInvalidFalse();
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         for (BoardEntity boardEntity : boardEntityList) {

@@ -29,9 +29,8 @@ public class BoardController {
     }
 
     @GetMapping("/")
-    public String findAll(Model model) {
-        // DB에서 전체 게시글 데이터를 가져와서 보여줌.
-        List<BoardDto> boardDtoList = boardService.findAll();
+    public String findByAll(Model model) {
+        List<BoardDto> boardDtoList = boardService.findByInvalidFalse();
         model.addAttribute("boardList", boardDtoList);
         return "pages/list";
     }
@@ -39,7 +38,7 @@ public class BoardController {
 
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, Model model) {
-        boardService.updateHits(id); // 해당 게시글 조회수 + 1
+        boardService.updateHits(id);
         BoardDto boardDto = boardService.findById(id);
         model.addAttribute("board", boardDto);
         return "pages/detail";
@@ -60,9 +59,9 @@ public class BoardController {
         return "/pages/detail";
     }
 
-    @GetMapping("/delete")
-    public String delete(@ModelAttribute BoardDto boardDto) {
-        boardService.updateInvalidTrue(boardDto.getId());
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        boardService.updateInvalidTrue(id);
         return "redirect:/board/";
     }
 }
