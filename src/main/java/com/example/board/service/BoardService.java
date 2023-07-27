@@ -2,6 +2,7 @@ package com.example.board.service;
 
 import com.example.board.dto.BoardDto;
 import com.example.board.entity.BoardEntity;
+import com.example.board.repository.BoardQueryDslRepository;
 import com.example.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class BoardService {
 
     private final BoardRepository boardRepository;
+    private final BoardQueryDslRepository boardQueryDslRepository;
 
     public void save(BoardDto boardDto) {
         BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDto);
@@ -37,7 +39,7 @@ public class BoardService {
 
     @Transactional
     public void updateHits(Long id) {
-        boardRepository.updateHits(id);
+        boardQueryDslRepository.updateHits(id);
     }
 
     @Transactional

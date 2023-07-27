@@ -2479,7 +2479,7 @@ label {
     width: 200px;
   }
   .cs-page_heading.cs-style1 {
-    height: 550px;
+    height: 350px;
   }
 }
 
@@ -8144,3 +8144,7 @@ ul:not(.cs-mega_wrapper)
   }
 }
 /*# sourceMappingURL=style.css.map */
+
+.detail-text-color{
+  color: #ffffff;
+}
