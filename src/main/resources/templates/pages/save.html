@@ -28,11 +28,15 @@
 <!-- Start Hero -->
 <div class="cs-page_heading cs-style1 cs-center text-center cs-bg" data-src="assets/img/contact_hero_bg.jpeg">
     <div class="container">
+        <div class="cs-height_50 cs-height_lg_40"></div>
         <div class="cs-page_heading_in">
-            <h1 class="cs-page_title cs-font_50 cs-white_color">하고싶은 말을 작성해보세요~</h1>
-            <ol class="breadcrumb text-uppercase">
-                <li class="breadcrumb-item"><a href="/board/">목록으로 돌아가기</a></li>
-            </ol>
+            <h1 class="cs-page_title cs-font_50 cs-white_color">게시글 작성</h1>
+        </div>
+        <div class="cs-height_50 cs-height_lg_40"></div>
+        <div class="btn_area text-end col-lg-12">
+            <button class="cs-btn cs-style1" onclick="req()">
+                목록으로 돌아가기
+            </button>
         </div>
     </div>
 </div>
@@ -47,29 +51,29 @@
                 <!-- Optional: Can be type="hidden" or type="text" for subject -->
                 <input type="hidden" name="subject" value="Submission from Laralink Template">
                 <div class="col-sm-12">
-                    <label class="cs-primary_color">Title</label>
+                    <label class="cs-primary_color">제목</label>
                     <input type="text" class="cs-form_field" name="title" required>
                     <div class="cs-height_20 cs-height_lg_20"></div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="cs-primary_color">Name</label>
+                    <label class="cs-primary_color">이름</label>
                     <input type="text" class="cs-form_field" name="name" required>
                     <div class="cs-height_20 cs-height_lg_20"></div>
                 </div>
                 <div class="col-sm-12">
-                    <label class="cs-primary_color">Password</label>
+                    <label class="cs-primary_color">비밀번호</label>
                     <input type="password" class="cs-form_field" name="password" required>
                     <div class="cs-height_20 cs-height_lg_20"></div>
                 </div>
 
                 <div class="col-lg-12">
-                    <label class="cs-primary_color">Contents</label>
+                    <label class="cs-primary_color">내용</label>
                     <textarea cols="30" rows="10" class="cs-form_field" name="contents" required></textarea>
                     <div class="cs-height_25 cs-height_lg_25"></div>
                 </div>
-                <div class="col-lg-12">
+                <div class="btn_area text-end col-lg-12">
                     <button class="cs-btn cs-style1" type="submit" onclick="req()">
-                        <span>저장</span>
+                        저장
                     </button>
                     <div id="cs-result"></div>
                 </div>

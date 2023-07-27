@@ -28,11 +28,18 @@
 <!-- Start Hero -->
 <div class="cs-page_heading cs-style1 cs-center text-center cs-bg" data-src="assets/img/contact_hero_bg.jpeg">
     <div class="container">
+        <div class="cs-height_50 cs-height_lg_40"></div>
         <div class="cs-page_heading_in">
-            <h1 class="cs-page_title cs-font_50 cs-white_color">게시판목록입니더~</h1>
-            <ol class="breadcrumb text-uppercase">
-                <li class="breadcrumb-item"><a href="/board/save">글 작성하기</a></li>
-            </ol>
+            <h1 class="cs-page_title cs-font_50 cs-white_color">게시판목록</h1>
+        </div>
+        <div class="cs-height_50 cs-height_lg_40"></div>
+        <div class="btn_area text-end col-lg-12">
+            <button class="cs-btn cs-style1" onclick="req(1)">
+                글 작성하기
+            </button>
+            <button class="cs-btn cs-style1" onclick="req(2)">
+                메인으로 이동
+            </button>
         </div>
     </div>
 </div>
@@ -51,11 +58,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="board : ${boardList}" style="text-align: center">
+            <tr th:each="board : ${boardList}" class="text-center">
                 <td th:text="${board.id}"></td>
                 <td><a th:href="@{|/board/${board.id}|}" th:text="${board.title}"></a></td>
                 <td th:text="${board.writer}"></td>
-                <td th:text="*{#temporals.format(board.createdDate,'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="*{#temporals.format(board.createdDate,'yyyy-MM-dd')}"></td>
                 <td th:text="${board.hits}"></td>
             </tr>
             </tbody>
@@ -89,7 +96,7 @@
             location.href = "/board/save";
         }
         if (num == 2) {
-            location.href = "/board/";
+            location.href = "/";
         }
     }
 </script>

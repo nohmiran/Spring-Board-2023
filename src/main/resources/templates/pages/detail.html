@@ -1,71 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Laralink">
+    <!-- Favicon Icon -->
+    <!--  <link rel="icon" href="assets/img/favicon.png">-->
+    <!-- Site Title -->
+    <title>Arino - Creative Agency Template</title>
+    <link rel="stylesheet" href="assets/css/plugins/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/lightgallery.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/slick.css">
+    <link rel="stylesheet" href="assets/css/plugins/lightgallery.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/animate.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
-    <h2>상세보기 form~</h2>
-    <table>
-        <tr>
-            <th>No.</th>
-            <th>작성자</th>
-            <th>제목</th>
-            <th>비밀번호</th>
-            <th>작성일자</th>
-            <th>내용</th>
-            <th>조회수</th>
-        </tr>
-        <tr>
-            <td th:text="${board.id}"></td>
-            <td th:text="${board.writer}"></td>
-            <td th:text="${board.title}"></td>
-            <td th:text="${board.password}"></td>
-            <td th:text="${board.createdDate}"></td>
-            <td th:text="${board.contents}"></td>
-            <td th:text="${board.hits}"></td>
-        </tr>
-    </table>
-    <button onclick="req(1)" class="reqBtn">수정</button>
-    <button onclick="req(2)" class="reqBtn">삭제</button>
-    <button onclick="req(3)" class="reqBtn">목록</button>
-
-    <div id="pw">
-        비밀번호 입력 : <input type="text" id="password">
-        <button onclick="pwCheck()">확인</button>
+<div class="cs-preloader cs-center">
+    <div class="cs-preloader_in"></div>
+</div>
+<!--header-->
+<div id="header"></div>
+<!-- Start Hero -->
+<div class="cs-page_heading cs-style1 cs-center text-center cs-bg" data-src="assets/img/contact_hero_bg.jpeg">
+    <div class="container">
+        <div class="cs-height_50 cs-height_lg_40"></div>
+        <div class="cs-page_heading_in">
+            <h1 class="cs-page_title cs-font_50 cs-white_color">상세보기</h1>
+        </div>
+        <div class="cs-height_50 cs-height_lg_40"></div>
+        <div class="btn_area text-end col-lg-12">
+            <button class="cs-btn cs-style1" onclick="req()">목록</button>
+        </div>
     </div>
-</body>
-<script th:inline="javascript">
-    const req = (num) => {
-        let inputTag = "비밀번호 입력 : <input type=\"text\" id=\"password\">\n" +
-            "    <button onclick=\"pwCheck(" + num + ")\">확인</button>";
-        document.getElementById("pw").innerHTML = inputTag;
+</div>
+<!-- End Hero -->
+<div class="cs-height_50 cs-height_lg_40"></div>
+<div class="container">
+    <div class="row">
+        <table class="table" style="color: white; width: 100%;">
+            <thead></thead>
+            <tbody>
+            <tr class="table-active" style="text-align: center">
+                <th colspan="2">NO.</th>
+                <td colspan="2" class="detail-text-color" th:text="${board.id}"></td>
+                <th colspan="2"></th>
+                <td colspan="2"></td>
+            </tr>
+            <tr class="table-active" style="text-align: center">
+                <th colspan="2">제목</th>
+                <td colspan="2" class="detail-text-color" th:text="${board.title}"></td>
+                <th colspan="2">작성자</th>
+                <td colspan="2" class="detail-text-color" th:text="${board.writer}"></td>
+            </tr>
+            <tr class="table-active" style="text-align: center">
+                <th colspan="2">작성일자</th>
+                <td colspan="2" class="detail-text-color" th:text="*{#temporals.format(board.createdDate,'yyyy-MM-dd')}"></td>
+                <th colspan="2">조회수</th>
+                <td colspan="2" class="detail-text-color" th:text="${board.hits}"></td>
+            </tr>
+            <tr class="table-active" style="text-align: center">
+                <th colspan="2">내용</th>
+                <td colspan="6" rowspan="3" class="detail-text-color" th:text="${board.contents}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="btn_area text-center col-lg-12">
+            <button class="cs-btn cs-style1" onclick="openPasswordPopup(1)">수정</button>
+            <button class="cs-btn cs-style1" onclick="openPasswordPopup(2)">삭제</button>
+        </div>
+        <div class="cs-height_50 cs-height_lg_40"></div>
+
+        <!-- 비밀번호 입력 팝업 -->
+        <div class="text-center" id="pwPopup" style="display: none;">
+            <p>글 작성시 입력했던 비밀번호를 입력해주세요!</p>
+            <label for="password">비밀번호 입력 :</label>
+            <input type="password" id="password" style="color: black">
+            <button class="cs-btn cs-style1" onclick="pwCheck()">확인</button>
+        </div>
+    </div>
+</div>
+<!--footer-->
+<div id="footer"></div>
+<!-- Script -->
+<script src="assets/js/plugins/jquery-3.6.0.min.js"></script>
+<script src="assets/js/plugins/isotope.pkg.min.js"></script>
+<script src="assets/js/plugins/jquery.slick.min.js"></script>
+<script src="assets/js/plugins/jquery.counter.min.js"></script>
+<script src="assets/js/plugins/lightgallery.min.js"></script>
+<script src="assets/js/plugins/wow.min.js"></script>
+<script src="assets/js/plugins/gsap.min.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#header").load("/html/header.html");
+        $("#footer").load("/html/footer.html");
+    });
+</script>
+
+<script type="text/javascript">
+    const req = () => {
+        // 글 목록
+        location.href = "/board/";
     }
+    // 수정 또는 삭제를 클릭했을 때 비밀번호 입력 팝업을 띄우는 함수
+    const openPasswordPopup = (num) => {
+        const pwPopup = document.getElementById("pwPopup");
+        const pwConfirmInput = document.getElementById("password");
 
-    const pwCheck = (num) => {
-        console.log("pwCheck함수", num);
-
-        const pwConfirm = document.getElementById("password").value;
-        console.log(pwConfirm);
-
-        const pw = [[${board.password}]];
-        const id = [[${board.id}]];
-        if (pw == pwConfirm) {
-            if (num == 1) {
-                 // 수정 요청
-                 location.href="/board/update/" + id;
-            }
-            if(num== 2){
-                 // 삭제 요청
-                 location.href="/board/delete/" + id;
-            }
-            if(num== 3){
-                // 글 목록
-                location.href="/board/";
-            }
+        // 비밀번호 입력 팝업을 보여주거나 감추기
+        if (pwPopup.style.display === "block") {
+            pwPopup.style.display = "none"; // 팝업을 감추기
         } else {
-            alert("false");
+            // 팝업을 보여주기 위해 스타일 변경
+            pwPopup.style.display = "block";
+            pwPopup.setAttribute("data-action", num);
+            pwConfirmInput.value = ""; // 비밀번호 입력창 초기화
         }
     }
+
+    // 비밀번호 확인 함수
+    const pwCheck = () => {
+        const pwConfirm = document.getElementById("password").value;
+        const pw = "[[${board.password}]]"; // 비밀번호를 가져오는 부분은 여러분이 수정해야 합니다.
+        const id = "[[${board.id}]]"; // 게시글 ID를 가져오는 부분은 여러분이 수정해야 합니다.
+
+        if (pw == pwConfirm) {
+            // 비밀번호가 일치하는 경우 data-action 값을 가져와서 해당 동작을 수행
+            const num = document.getElementById("pwPopup").getAttribute("data-action");
+
+            if (num == 1) {
+                // 수정 요청
+                location.href = "/board/update/" + id;
+            } else if (num == 2) {
+                // 삭제 요청
+                location.href = "/board/delete/" + id;
+            }
+        } else {
+            alert("비밀번호가 일치하지 않습니다.");
+        }
+
+        // 비밀번호 확인 후 비밀번호 입력 팝업 닫기
+        document.getElementById("pwPopup").style.display = "none";
+    }
 </script>
+</body>
 </html>
+
+
