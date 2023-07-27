@@ -1093,7 +1093,25 @@ hr {
   color: #fff;
 }
 
+.cs-form_field2 {
+  display: block;
+  width: 50%;
+  padding: 10px 20px;
+  border-radius: 15px;
+  outline: none;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  border: 2px solid #999696;
+  background-color: transparent;
+  color: #fff;
+  margin: 0 auto;
+}
+
 .cs-form_field:focus {
+  border-color: #FF4A17;
+}
+
+.cs-form_field2:focus {
   border-color: #FF4A17;
 }
 

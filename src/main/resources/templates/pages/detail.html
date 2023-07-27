@@ -48,8 +48,8 @@
             <tr class="table-active" style="text-align: center">
                 <th colspan="2">NO.</th>
                 <td colspan="2" class="detail-text-color" th:text="${board.id}"></td>
-                <th colspan="2"></th>
-                <td colspan="2"></td>
+                <th colspan="2">조회수</th>
+                <td colspan="2" class="detail-text-color" th:text="${board.hits}"></td>
             </tr>
             <tr class="table-active" style="text-align: center">
                 <th colspan="2">제목</th>
@@ -59,9 +59,13 @@
             </tr>
             <tr class="table-active" style="text-align: center">
                 <th colspan="2">작성일자</th>
-                <td colspan="2" class="detail-text-color" th:text="*{#temporals.format(board.createdDate,'yyyy-MM-dd')}"></td>
-                <th colspan="2">조회수</th>
-                <td colspan="2" class="detail-text-color" th:text="${board.hits}"></td>
+                <td colspan="2" class="detail-text-color"
+                    th:text="*{#temporals.format(board.createdDate,'yyyy-MM-dd')}"></td>
+                <th colspan="2" th:if="${board.updatedDate} == null"></th>
+                <td colspan="2" th:if="${board.updatedDate} == null"></td>
+                <th colspan="2" th:if="${board.updatedDate} != null">수정일자</th>
+                <td colspan="2" class="detail-text-color" th:if="${board.updatedDate} != null"
+                    th:text="*{#temporals.format(board.createdDate,'yyyy-MM-dd')}"></td>
             </tr>
             <tr class="table-active" style="text-align: center">
                 <th colspan="2">내용</th>
@@ -78,8 +82,7 @@
         <!-- 비밀번호 입력 팝업 -->
         <div class="text-center" id="pwPopup" style="display: none;">
             <p>글 작성시 입력했던 비밀번호를 입력해주세요!</p>
-            <label for="password">비밀번호 입력 :</label>
-            <input type="password" id="password" style="color: black">
+            <input type="password" class="cs-form_field2 mb-3" id="password">
             <button class="cs-btn cs-style1" onclick="pwCheck()">확인</button>
         </div>
     </div>
@@ -115,9 +118,8 @@
 
         // 비밀번호 입력 팝업을 보여주거나 감추기
         if (pwPopup.style.display === "block") {
-            pwPopup.style.display = "none"; // 팝업을 감추기
+            pwPopup.style.display = "none"; // 팝업 감추기
         } else {
-            // 팝업을 보여주기 위해 스타일 변경
             pwPopup.style.display = "block";
             pwPopup.setAttribute("data-action", num);
             pwConfirmInput.value = ""; // 비밀번호 입력창 초기화
@@ -127,19 +129,16 @@
     // 비밀번호 확인 함수
     const pwCheck = () => {
         const pwConfirm = document.getElementById("password").value;
-        const pw = "[[${board.password}]]"; // 비밀번호를 가져오는 부분은 여러분이 수정해야 합니다.
-        const id = "[[${board.id}]]"; // 게시글 ID를 가져오는 부분은 여러분이 수정해야 합니다.
+        const pw = "[[${board.password}]]";
+        const id = "[[${board.id}]]";
 
-        if (pw == pwConfirm) {
-            // 비밀번호가 일치하는 경우 data-action 값을 가져와서 해당 동작을 수행
+        if (pw == pwConfirm) {// 비밀번호가 일치하는 경우
             const num = document.getElementById("pwPopup").getAttribute("data-action");
 
-            if (num == 1) {
-                // 수정 요청
+            if (num == 1) { // 수정 요청
                 location.href = "/board/update/" + id;
-            } else if (num == 2) {
-                // 삭제 요청
-                location.href = "/board/delete/" + id;
+            } else if (num == 2) { // 삭제 요청
+                location.href = "/board/delete";
             }
         } else {
             alert("비밀번호가 일치하지 않습니다.");

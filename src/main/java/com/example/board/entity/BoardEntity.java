@@ -39,7 +39,7 @@ public class BoardEntity extends InvalidEntity{
     @Column
     private int hits;
 
-    public static BoardEntity toSaveEntity(BoardDto boardDto) {
+    public static BoardEntity from(BoardDto boardDto) {
 
         BoardEntity boardEntity = new BoardEntity();
 
@@ -51,17 +51,5 @@ public class BoardEntity extends InvalidEntity{
 
         return boardEntity;
     }
-    public static BoardEntity toUpdateEntity(BoardDto boardDto) {
 
-        BoardEntity boardEntity = new BoardEntity();
-
-        boardEntity.setId(boardDto.getId());
-        boardEntity.setTitle(boardDto.getTitle());
-        boardEntity.setWriter(boardDto.getWriter());
-        boardEntity.setPassword(boardDto.getPassword());
-        boardEntity.setContents(boardDto.getContents());
-        boardEntity.setHits(boardDto.getHits());
-
-        return boardEntity;
-    }
 }

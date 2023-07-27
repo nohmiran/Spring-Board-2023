@@ -10,13 +10,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/board/assets/**")
-                .addResourceLocations("classpath:/static/assets/");
+        String[] assetLocations = { "classpath:/static/assets/" };
+        registry.addResourceHandler("/assets/**").addResourceLocations(assetLocations);
+        registry.addResourceHandler("/board/assets/**").addResourceLocations(assetLocations);
+        registry.addResourceHandler("/board/update/assets/**").addResourceLocations(assetLocations);
 
-        registry.addResourceHandler("/assets/**")
-                .addResourceLocations("classpath:/static/assets/");
-
-        registry.addResourceHandler("/html/**")
-                .addResourceLocations("classpath:/static/html/");
+        String[] htmlLocations = {"classpath:/static/html/"};
+        registry.addResourceHandler("/html/**").addResourceLocations(htmlLocations);
     }
 }

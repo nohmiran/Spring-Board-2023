@@ -2,78 +2,82 @@
 <html class="no-js" lang="en">
 
 <head>
-  <!-- Meta Tags -->
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="Laralink">
-  <!-- Favicon Icon -->
-  <!--  <link rel="icon" href="assets/img/favicon.png">-->
-  <!-- Site Title -->
-  <title>Arino - Creative Agency Template</title>
-  <link rel="stylesheet" href="assets/css/plugins/bootstrap.min.css">
-  <link rel="stylesheet" href="assets/css/plugins/lightgallery.min.css">
-  <link rel="stylesheet" href="assets/css/plugins/slick.css">
-  <link rel="stylesheet" href="assets/css/plugins/lightgallery.min.css">
-  <link rel="stylesheet" href="assets/css/plugins/animate.css">
-  <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Laralink">
+    <!-- Favicon Icon -->
+    <!--  <link rel="icon" href="assets/img/favicon.png">-->
+    <!-- Site Title -->
+    <title>Arino - Creative Agency Template</title>
+    <link rel="stylesheet" href="assets/css/plugins/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/lightgallery.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/slick.css">
+    <link rel="stylesheet" href="assets/css/plugins/lightgallery.min.css">
+    <link rel="stylesheet" href="assets/css/plugins/animate.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
 <div class="cs-preloader cs-center">
-  <div class="cs-preloader_in"></div>
+    <div class="cs-preloader_in"></div>
 </div>
 <!--header-->
 <div id="header"></div>
 <!-- Start Hero -->
 <div class="cs-page_heading cs-style1 cs-center text-center cs-bg" data-src="assets/img/contact_hero_bg.jpeg">
-  <div class="container">
-    <div class="cs-height_50 cs-height_lg_40"></div>
-    <div class="cs-page_heading_in">
-      <h1 class="cs-page_title cs-font_50 cs-white_color">게시글 수정</h1>
+    <div class="container">
+        <div class="cs-height_50 cs-height_lg_40"></div>
+        <div class="cs-page_heading_in">
+            <h1 class="cs-page_title cs-font_50 cs-white_color">게시글 수정</h1>
+        </div>
+        <div class="cs-height_50 cs-height_lg_40"></div>
+        <div class="btn_area text-end col-lg-12">
+            <button class="cs-btn cs-style1" onclick="req()">
+                목록으로 돌아가기
+            </button>
+        </div>
     </div>
-    <div class="cs-height_50 cs-height_lg_40"></div>
-    <div class="btn_area text-end col-lg-12">
-      <button class="cs-btn cs-style1" onclick="req()">
-        목록으로 돌아가기
-      </button>
-    </div>
-  </div>
 </div>
 <!-- End Hero -->
 <div class="cs-height_50 cs-height_lg_40"></div>
 <div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <form id="cs-form" action="/board/save" method="post" class="row">
-        <input type="hidden" name="access_key" value="6d7bc3fc-6190-43c5-8298-89ac5ef74213"/>
-        <input type="checkbox" name="botcheck" style="display: none;"/>
-        <!-- Optional: Can be type="hidden" or type="text" for subject -->
-        <input type="hidden" name="subject" value="Submission from Laralink Template">
-        <div class="col-sm-12">
-          <label class="cs-primary_color">제목</label>
-          <input type="text" class="cs-form_field" name="title" required>
-          <div class="cs-height_20 cs-height_lg_20"></div>
-        </div>
-        <div class="col-sm-12">
-          <label class="cs-primary_color">이름</label>
-          <input type="text" class="cs-form_field" name="name" required>
-          <div class="cs-height_20 cs-height_lg_20"></div>
-        </div>
+    <div class="row">
         <div class="col-lg-12">
-          <label class="cs-primary_color">내용</label>
-          <textarea cols="30" rows="10" class="cs-form_field" name="contents" required></textarea>
-          <div class="cs-height_25 cs-height_lg_25"></div>
+            <form id="update" action="/board/update" method="post" name = "updateForm" class="row">
+                <input type="hidden" name="access_key" value="6d7bc3fc-6190-43c5-8298-89ac5ef74213"/>
+                <input type="checkbox" name="botcheck" style="display: none;"/>
+                <!-- Optional: Can be type="hidden" or type="text" for subject -->
+                <input type="hidden" name="subject" value="Submission from Laralink Template">
+                <input type="hidden" name="id" th:value="${boardUpdate.id}">
+                <div class="col-sm-12">
+                    <label class="cs-primary_color">제목</label>
+                    <input type="text" class="cs-form_field" name="title" th:value="${boardUpdate.title}" required>
+                    <div class="cs-height_20 cs-height_lg_20"></div>
+                </div>
+                <div class="col-sm-12">
+                    <label class="cs-primary_color">이름</label>
+                    <input type="text" class="cs-form_field" name="name" th:value="${boardUpdate.writer}"
+                           onclick="clickWriter()"
+                           required readonly>
+                    <div class="cs-height_20 cs-height_lg_20"></div>
+                </div>
+                <div class="col-lg-12">
+                    <label class="cs-primary_color">내용</label>
+                    <textarea cols="30" rows="10" class="cs-form_field" name="contents"
+                              th:text="${boardUpdate.contents}" required></textarea>
+                    <div class="cs-height_25 cs-height_lg_25"></div>
+                </div>
+                <div class="btn_area text-end col-lg-12">
+                    <button class="cs-btn cs-style1" type="submit" onclick="req()">
+                        저장
+                    </button>
+                    <div id="cs-result"></div>
+                </div>
+            </form>
         </div>
-        <div class="btn_area text-end col-lg-12">
-          <button class="cs-btn cs-style1" type="submit" onclick="req()">
-            저장
-          </button>
-          <div id="cs-result"></div>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
 <div class="cs-height_50 cs-height_lg_40"></div>
 <!--footer-->
@@ -89,15 +93,18 @@
 <script src="assets/js/main.js"></script>
 
 <script type="text/javascript">
-  $(document).ready(function () {
-    $("#header").load("/html/header.html");
-    $("#footer").load("/html/footer.html");
-  });
+    $(document).ready(function () {
+        $("#header").load("/html/header.html");
+        $("#footer").load("/html/footer.html");
+    });
 
-  const req = () => {
-    // 글 목록
-    location.href = "/board/";
-  }
+    const req = () => {
+        document.updateForm.submit();
+    }
+
+    const clickWriter = () => {
+        alert("작성자는 수정할 수 없어요!");
+    }
 </script>
 
 </body>

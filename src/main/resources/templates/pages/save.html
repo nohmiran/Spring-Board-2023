@@ -44,29 +44,29 @@
 <div class="cs-height_50 cs-height_lg_40"></div>
 <div class="container">
     <div class="row">
-        <div class="col-lg-12">
-            <form id="cs-form" action="/board/save" method="post" class="row">
+        <div class="col-12">
+            <form id="save" action="/board/save" method="post" name = "saveForm"  class="row">
                 <input type="hidden" name="access_key" value="6d7bc3fc-6190-43c5-8298-89ac5ef74213"/>
                 <input type="checkbox" name="botcheck" style="display: none;"/>
                 <!-- Optional: Can be type="hidden" or type="text" for subject -->
                 <input type="hidden" name="subject" value="Submission from Laralink Template">
-                <div class="col-sm-12">
+                <div class="col-12">
                     <label class="cs-primary_color">제목</label>
                     <input type="text" class="cs-form_field" name="title" required>
                     <div class="cs-height_20 cs-height_lg_20"></div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-6">
                     <label class="cs-primary_color">이름</label>
                     <input type="text" class="cs-form_field" name="name" required>
                     <div class="cs-height_20 cs-height_lg_20"></div>
                 </div>
-                <div class="col-sm-12">
+                <div class="col-6">
                     <label class="cs-primary_color">비밀번호</label>
                     <input type="password" class="cs-form_field" name="password" required>
                     <div class="cs-height_20 cs-height_lg_20"></div>
                 </div>
 
-                <div class="col-lg-12">
+                <div class="col-12">
                     <label class="cs-primary_color">내용</label>
                     <textarea cols="30" rows="10" class="cs-form_field" name="contents" required></textarea>
                     <div class="cs-height_25 cs-height_lg_25"></div>

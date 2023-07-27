@@ -7,6 +7,7 @@ import com.example.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,7 @@ public class BoardService {
     private final BoardQueryDslRepository boardQueryDslRepository;
 
     public void save(BoardDto boardDto) {
-        BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDto);
+        BoardEntity boardEntity = BoardEntity.from(boardDto);
         boardRepository.save(boardEntity);
     }
 
@@ -55,11 +56,20 @@ public class BoardService {
     }
 
     public void update(BoardDto boardDto) {
-        boardRepository.save(BoardEntity.toUpdateEntity(boardDto));
+        BoardEntity boardEntity = boardRepository.findById(boardDto.getId()) // 해당 id로 기존 엔티티 조회
+                .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다"));
+
+        boardEntity.setTitle(boardDto.getTitle());
+        boardEntity.setContents(boardDto.getContents());
+
+        boardRepository.save(boardEntity);
     }
 
-    public void delete(Long id) {
-        boardRepository.deleteById(id);
+    public void updateInvalidTrue(Long id) {
+        BoardEntity boardEntity = boardRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("해당 게시글이 없습니다"));
+        boardEntity.setInvalid(true);
+        boardRepository.save(boardEntity);
     }
 
 }

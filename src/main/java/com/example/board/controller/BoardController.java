@@ -18,7 +18,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/save")
-    public String saveBoard() {
+    public String saveForm() {
         return "pages/save";
     }
 
@@ -39,9 +39,7 @@ public class BoardController {
 
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, Model model) {
-        // 해당 게시글 조회수 하나 올리고
-        // 게시글 데이터 가져와서 detail에 출력
-        boardService.updateHits(id);
+        boardService.updateHits(id); // 해당 게시글 조회수 + 1
         BoardDto boardDto = boardService.findById(id);
         model.addAttribute("board", boardDto);
         return "pages/detail";
@@ -55,14 +53,16 @@ public class BoardController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute BoardDto boardDto) {
+    public String update(@ModelAttribute BoardDto boardDto, Model model) {
         boardService.update(boardDto);
-        return "redirect:/board/" + boardDto.getId();
+        BoardDto updatedBoardDto = boardService.findById(boardDto.getId());
+        model.addAttribute("board", updatedBoardDto);
+        return "/pages/detail";
     }
 
     @GetMapping("/delete")
-    public String delete(@PathVariable Long id){
-        boardService.delete(id);
+    public String delete(@ModelAttribute BoardDto boardDto) {
+        boardService.updateInvalidTrue(boardDto.getId());
         return "redirect:/board/";
     }
 }
