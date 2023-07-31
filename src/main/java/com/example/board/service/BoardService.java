@@ -5,6 +5,7 @@ import com.example.board.entity.BoardEntity;
 import com.example.board.repository.BoardQueryDslRepository;
 import com.example.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -12,6 +13,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 // DTO -> Entity (Entity Class)
 // Entity -> DTO (DTO Class)
@@ -36,6 +38,17 @@ public class BoardService {
             boardDtoList.add(BoardDto.toBoardDto(boardEntity));
         }
         return boardDtoList;
+    }
+
+    public Page<BoardDto> paging(Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;
+        Page<BoardEntity> boardEntities = boardRepository.findByInvalidFalse(PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "id")));
+
+        List<BoardDto> boardDtoList = boardEntities.getContent().stream()
+                .map(BoardDto::toBoardDto)
+                .collect(Collectors.toList());
+
+        return new PageImpl<>(boardDtoList, pageable, boardEntities.getTotalElements());
     }
 
     @Transactional

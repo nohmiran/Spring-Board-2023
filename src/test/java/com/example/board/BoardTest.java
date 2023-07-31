@@ -16,19 +16,19 @@ public class BoardTest {
     @Autowired
     private BoardService boardservice;
 
-    public BoardDto newBoard(int i) {
-        BoardDto boardDto = new BoardDto("title" + i, "writer" + i, "password" + i, "contents" + i);
-        return boardDto;
-    }
+//    public BoardDto newBoard(int i) {
+//        BoardDto boardDto = new BoardDto("title" + i, "writer" + i, "password" + i, "contents" + i);
+//        return boardDto;
+//    }
 
-    @Test
-    @Transactional
-    @Rollback(value = false)
-    public void saveTest() {
-
-        IntStream.rangeClosed(1,20).forEach(i->{
-            boardservice.save(newBoard(i));
-        });
-
-    }
+//    @Test
+//    @Transactional
+//    @Rollback(value = false)
+//    public void saveTest() {
+//
+//        IntStream.rangeClosed(1,20).forEach(i->{
+//            boardservice.save(newBoard(i));
+//        });
+//
+//    }
 }

@@ -4,11 +4,12 @@ import com.example.board.dto.BoardDto;
 import com.example.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -28,13 +29,21 @@ public class BoardController {
         return "redirect:/board/";
     }
 
+//    @GetMapping("/")
+//    public String findByAll(Model model) {
+//        List<BoardDto> boardDtoList = boardService.findByInvalidFalse();
+//        model.addAttribute("boardList", boardDtoList);
+//        return "pages/list";
+//    }
+
     @GetMapping("/")
-    public String findByAll(Model model) {
-        List<BoardDto> boardDtoList = boardService.findByInvalidFalse();
-        model.addAttribute("boardList", boardDtoList);
+    public String paging(@PageableDefault(page = 1) Pageable pageable, Model model) {
+        Page<BoardDto> boardList = boardService.paging(pageable);
+        int currentPage = pageable.getPageNumber();
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("currentPage", currentPage);
         return "pages/list";
     }
-
 
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, Model model) {
@@ -56,7 +65,7 @@ public class BoardController {
         boardService.update(boardDto);
         BoardDto updatedBoardDto = boardService.findById(boardDto.getId());
         model.addAttribute("board", updatedBoardDto);
-        return "/pages/detail";
+        return "pages/detail";
     }
 
     @GetMapping("/delete/{id}")
@@ -64,4 +73,5 @@ public class BoardController {
         boardService.updateInvalidTrue(id);
         return "redirect:/board/";
     }
+
 }

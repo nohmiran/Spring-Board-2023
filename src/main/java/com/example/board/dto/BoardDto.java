@@ -30,7 +30,8 @@ public class BoardDto {
 
     private LocalDateTime updatedDate;
 
-    public BoardDto(String title, String writer, String password, String contents) {
+    public BoardDto(Long id, String title, String writer, String password, String contents) {
+        this.id = id;
         this.title = title;
         this.writer = writer;
         this.password = password;

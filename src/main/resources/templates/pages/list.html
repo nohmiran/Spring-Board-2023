@@ -60,13 +60,68 @@
             <tbody>
             <tr th:each="board, status : ${boardList}" class="text-center">
                 <td th:text="${status.index + 1}"></td>
-                <td><a th:href="@{|/board/${board.id}|}" th:text="${board.title}"></a></td>
+                <!--<td><a th:href="@{|/board/${board.id}|}" th:text="${board.title}"></a></td>-->
+                <td><a th:href="@{|/board/${board.id}|(page=${boardList.number + 1})}" th:text="${board.title}"></a></td>
                 <td th:text="${board.writer}"></td>
                 <td th:text="*{#temporals.format(board.createdDate,'yyyy-MM-dd')}"></td>
                 <td th:text="${board.hits}"></td>
             </tr>
             </tbody>
         </table>
+        <!--
+          &lt;!&ndash;첫번째 페이지&ndash;&gt;
+          <a class="page-link" th:href="@{/board/(page=${startPage})}">&laquo;</a>
+          &lt;!&ndash;이전 페이지&ndash;&gt;
+          <a class="page-link" th:href="${startPage} ? '#' : @{/board/(page=${currentPage})}">&lt;</a>
+          &lt;!&ndash;페이지 번호&ndash;&gt;
+          <span th:each="page:${#numbers.sequence(startPage, endPage)}">
+              <a class="page-link" th:href="@{/board/(page=${page})}" th:text="${page}"></a>
+          </span>
+          &lt;!&ndash;다음 페이지&ndash;&gt;
+          <a class="page-link" th:href="${endPage} ? '#' : @{/board/(page=${currentPage + 2})}">&gt;</a>
+          &lt;!&ndash;마지막 페이지&ndash;&gt;
+          <a class="page-link" th:href="@{/board/(page=${endPage})}">&raquo;</a>-->
+        <div th:if="${boardList.content.size() != 0}">
+            <nav>
+                <ul id="pagination" class="pagination pagination-sm justify-content-center"
+                    th:with="start=${T(java.lang.Math).floor(boardList.number/10)*10 + 1},
+					                last = (${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages})">
+                    <!--첫번째 페이지-->
+                    <li th:class="${boardList.first} ? 'page-item disabled'">
+                        <a th:href="${boardList.first} ? '#' :  @{/board/(page=1)}" aria-label="First"
+                           class="page-link2">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <!--이전 페이지-->
+                    <li th:class="${boardList.first} ? 'page-item disabled'">
+                        <a th:href="${boardList.first} ? '#' : @{/board/(page=${boardList.number - 1})}"
+                           aria-label="Previous" class="page-link2">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <!--페이지 번호-->
+                    <li th:each="page : ${#numbers.sequence(start, last)}"
+                        th:class="${page == boardList.number + 1} ? 'page-item active'">
+                        <a th:text="${page}" th:href="@{/board/(page=${page})}" class="page-link2">
+                        </a>
+                    </li>
+                    <!--다음 페이지-->
+                    <li th:class="${boardList.last} ? 'page-item disabled'">
+                        <a th:href="${boardList.last} ? '#' : @{/board/(page=${boardList.number + 1})}"
+                           aria-label="Next" class="page-link2"> <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <!--마지막 페이지-->
+                    <li th:class="${boardList.last} ? 'page-item disabled'">
+                        <a th:href="${boardList.last} ? '#' : @{/board/(page=${boardList.totalPages})}"
+                           aria-label="Last" class="page-link2">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 
@@ -99,6 +154,8 @@
             location.href = "/";
         }
     }
+</script>
+<script>
 </script>
 </body>
 </html>
